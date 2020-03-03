@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huajigg.mapper.IHeroRecommendedItemMapper">
+    
+    <select id="getItem2" parameterType="int" resultType="Item">
+        select * from item where iid in ( select iid from rib_ib where rib_id = #{rib_id});
+    </select>
+    
+    <resultMap id="getItem" type="RecommendedItemBuild">
+        <id property="id" column="id"/>
+        <collection property="items" column="rib_id" select="getItem2"/>
+    </resultMap>
+    
+    <select id="selectHeroRecommendedItem"  parameterType="int" resultMap="getItem">
+        select * from recommeded_item_build where hid = #{hid};
+    </select>
+</mapper>

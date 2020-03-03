@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huajigg.mapper.IHeroPositionMapper">
+
+    <select id="getHeroByHid" resultType="Hero" parameterType="int">
+        select * from hero where hid = #{hid};
+    </select>
+
+    <resultMap type="HeroPosition" id="getHero">
+        <id property="id" column="id"/>
+        <association property="hero" column="hid" select="getHeroByHid"></association>
+    </resultMap>
+
+    <select id="selectHeroPosition"  resultMap="getHero">
+        select * from hero_position;
+    </select>
+</mapper>

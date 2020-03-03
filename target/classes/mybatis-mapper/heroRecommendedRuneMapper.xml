@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huajigg.mapper.IHeroRecommendRuneMapper">
+
+    <select id="getRune3" resultType="Rune" parameterType="int">
+        select * from rune where rid in (select rid from rrb_rb where rrb_id = #{rrb_id});
+    </select>
+
+    <resultMap id="getRune1" type="RecommendedRuneBuild">
+        <id property="id" column="id"/>
+        <collection property="Runes" column="rrb_id" select="getRune3"/>
+    </resultMap>
+
+    <select id="selectHeroRecommendRune" parameterType="int" resultMap="getRune1">
+        select * from recommended_rune_build where hid = #{hid};
+    </select>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huajigg.mapper.IHeroRecommendedSummonerSpellMapper">
+
+    <select id="getSS" resultType="SummonerSpell" parameterType="int" >
+        select * from summoner_spell where ss_id = #{ss_id};
+    </select>
+
+    <resultMap id="getSummonerSpell" type="RecommendedSummonerSpell">
+        <id property="id" column="id"/>
+        <association property="rssSummonerSpell1" column="rss_ss1" select="getSS"></association>
+        <association property="rssSummonerSpell2" column="rss_ss2" select="getSS"></association>
+    </resultMap>
+
+    <select id="selectRecommendedSummonerSpell" parameterType="int" resultMap="getSummonerSpell">
+        select * from recommended_summoner_spell where hid = #{hid};
+    </select>
+
+</mapper>
